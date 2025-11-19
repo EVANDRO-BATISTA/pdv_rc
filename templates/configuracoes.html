@@ -1,0 +1,172 @@
+{% extends "layout.html" %}
+
+{% block title %}Configurações - Sistema PDV{% endblock %}
+
+{% block main_content %}
+<div class="page-container">
+    <div class="page-header">
+        <h1>Configurações</h1>
+    </div>
+    
+    <div class="tabs">
+        <button class="tab-btn active" onclick="showTab('company')">Empresa</button>
+        <button class="tab-btn" onclick="showTab('users')">Usuários</button>
+        <button class="tab-btn" onclick="showTab('sellers')">Vendedores</button>
+    </div>
+    
+    <div id="company-tab" class="tab-content active">
+        <form id="company-form">
+            <div class="form-grid">
+                <div class="form-group">
+                    <label>Nome da Empresa *</label>
+                    <input type="text" id="company-name" required>
+                </div>
+                
+                <div class="form-group">
+                    <label>CNPJ</label>
+                    <input type="text" id="company-cnpj">
+                </div>
+                
+                <div class="form-group">
+                    <label>Telefone</label>
+                    <input type="text" id="company-phone">
+                </div>
+                
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" id="company-email">
+                </div>
+                
+                <div class="form-group full-width">
+                    <label>Endereço</label>
+                    <textarea id="company-address" rows="3"></textarea>
+                </div>
+                
+                <div class="form-group full-width">
+                    <label>Logo da Empresa</label>
+                    <input type="file" id="company-logo" accept="image/*">
+                    <div id="logo-preview"></div>
+                </div>
+            </div>
+            
+            <button type="submit" class="btn btn-primary">Salvar Alterações</button>
+        </form>
+    </div>
+    
+    <div id="users-tab" class="tab-content">
+        <button onclick="openUserModal()" class="btn btn-primary">Novo Usuário</button>
+        
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>Nome</th>
+                    <th>Usuário</th>
+                    <th>Perfil</th>
+                    <th>Status</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody id="users-table"></tbody>
+        </table>
+    </div>
+    
+    <div id="sellers-tab" class="tab-content">
+        <button onclick="openSellerModal()" class="btn btn-primary">Novo Vendedor</button>
+        
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>Nome</th>
+                    <th>CPF</th>
+                    <th>Telefone</th>
+                    <th>Comissão (%)</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody id="sellers-table"></tbody>
+        </table>
+    </div>
+</div>
+
+<div id="user-modal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2>Novo Usuário</h2>
+            <button onclick="closeUserModal()" class="close-btn">&times;</button>
+        </div>
+        
+        <form id="user-form">
+            <div class="form-group">
+                <label>Nome *</label>
+                <input type="text" id="user-name" required>
+            </div>
+            
+            <div class="form-group">
+                <label>Usuário *</label>
+                <input type="text" id="user-username" required>
+            </div>
+            
+            <div class="form-group">
+                <label>Senha *</label>
+                <input type="password" id="user-password" required>
+            </div>
+            
+            <div class="form-group">
+                <label>Perfil *</label>
+                <select id="user-role" required>
+                    <option value="user">Usuário</option>
+                    <option value="admin">Administrador</option>
+                </select>
+            </div>
+            
+            <div class="modal-actions">
+                <button type="submit" class="btn btn-primary">Salvar</button>
+                <button type="button" onclick="closeUserModal()" class="btn btn-secondary">Cancelar</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div id="seller-modal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2>Novo Vendedor</h2>
+            <button onclick="closeSellerModal()" class="close-btn">&times;</button>
+        </div>
+        
+        <form id="seller-form">
+            <div class="form-group">
+                <label>Nome *</label>
+                <input type="text" id="seller-name" required>
+            </div>
+            
+            <div class="form-group">
+                <label>CPF</label>
+                <input type="text" id="seller-cpf">
+            </div>
+            
+            <div class="form-group">
+                <label>Telefone</label>
+                <input type="text" id="seller-phone">
+            </div>
+            
+            <div class="form-group">
+                <label>Email</label>
+                <input type="email" id="seller-email">
+            </div>
+            
+            <div class="form-group">
+                <label>Comissão (%)</label>
+                <input type="number" id="seller-commission" step="0.01" value="0">
+            </div>
+            
+            <div class="modal-actions">
+                <button type="submit" class="btn btn-primary">Salvar</button>
+                <button type="button" onclick="closeSellerModal()" class="btn btn-secondary">Cancelar</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script src="{{ url_for('static', filename='js/configuracoes.js') }}"></script>
+{% endblock %}

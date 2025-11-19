@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="app-container">
+    <nav class="sidebar">
+        <div class="logo-container">
+            <img id="company-logo" src="{{ url_for('static', filename='images/logo.png') }}" alt="Logo" style="display: none;">
+            <h2 id="company-name">Sistema PDV</h2>
+        </div>
+        
+        <ul class="nav-menu">
+            <li><a href="/dashboard" class="nav-link"><span>📊</span> Dashboard</a></li>
+            <li><a href="/pdv" class="nav-link"><span>💰</span> PDV</a></li>
+            <li><a href="/produtos" class="nav-link"><span>📦</span> Produtos</a></li>
+            <li><a href="/estoque" class="nav-link"><span>📋</span> Estoque</a></li>
+            <li><a href="/relatorios" class="nav-link"><span>📈</span> Relatórios</a></li>
+            <li><a href="/caixa" class="nav-link"><span>💵</span> Caixa</a></li>
+            <li><a href="/configuracoes" class="nav-link"><span>⚙️</span> Configurações</a></li>
+        </ul>
+        
+        <button onclick="logout()" class="logout-btn">Sair</button>
+    </nav>
+    
+    <main class="main-content">
+        {% block main_content %}{% endblock %}
+    </main>
+</div>
+
+<script>
+// Load company info
+async function loadCompanyInfo() {
+    try {
+        const company = await api.get('/api/company');
+        document.getElementById('company-name').textContent = company.name;
+        
+        if (company.logo) {
+            const logo = document.getElementById('company-logo');
+            logo.src = company.logo;
+            logo.style.display = 'block';
+        }
+    } catch (error) {
+        console.error('Error loading company info:', error);
+    }
+}
+
+function logout() {
+    localStorage.removeItem('user');
+    window.location.href = '/';
+}
+
+// Highlight active page
+document.addEventListener('DOMContentLoaded', () => {
+    const currentPath = window.location.pathname;
+    document.querySelectorAll('.nav-link').forEach(link => {
+        if (link.getAttribute('href') === currentPath) {
+            link.classList.add('active');
+        }
+    });
+    
+    loadCompanyInfo();
+});
+</script>
+{% endblock %}

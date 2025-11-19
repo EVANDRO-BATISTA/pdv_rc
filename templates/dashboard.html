@@ -1,0 +1,88 @@
+{% extends "layout.html" %}
+
+{% block title %}Dashboard - Sistema PDV{% endblock %}
+
+{% block main_content %}
+<div class="page-container">
+    <div class="page-header">
+        <h1>Dashboard</h1>
+        <div class="date-filter">
+            <input type="date" id="start-date">
+            <span>até</span>
+            <input type="date" id="end-date">
+            <button onclick="filterDashboard()" class="btn btn-primary">Filtrar</button>
+        </div>
+    </div>
+    
+    <div class="stats-grid">
+        <div class="stat-card">
+            <div class="stat-icon">💰</div>
+            <div class="stat-content">
+                <h3>Vendas Hoje</h3>
+                <p class="stat-value" id="today-sales">R$ 0,00</p>
+                <span class="stat-change" id="sales-change">0 vendas</span>
+            </div>
+        </div>
+        
+        <div class="stat-card">
+            <div class="stat-icon">📦</div>
+            <div class="stat-content">
+                <h3>Produtos</h3>
+                <p class="stat-value" id="total-products">0</p>
+                <span class="stat-change" id="low-stock">0 com estoque baixo</span>
+            </div>
+        </div>
+        
+        <div class="stat-card">
+            <div class="stat-icon">👥</div>
+            <div class="stat-content">
+                <h3>Clientes</h3>
+                <p class="stat-value" id="total-customers">0</p>
+                <span class="stat-change">cadastrados</span>
+            </div>
+        </div>
+        
+        <div class="stat-card">
+            <div class="stat-icon">💵</div>
+            <div class="stat-content">
+                <h3>Saldo Caixa</h3>
+                <p class="stat-value" id="cash-balance">R$ 0,00</p>
+                <span class="stat-change">atualizado</span>
+            </div>
+        </div>
+    </div>
+    
+    <div class="dashboard-grid">
+        <div class="dashboard-card">
+            <h2>Vendas Recentes</h2>
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Data</th>
+                        <th>Cliente</th>
+                        <th>Total</th>
+                        <th>Pagamento</th>
+                    </tr>
+                </thead>
+                <tbody id="recent-sales"></tbody>
+            </table>
+        </div>
+        
+        <div class="dashboard-card">
+            <h2>Produtos com Estoque Baixo</h2>
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Produto</th>
+                        <th>Estoque</th>
+                        <th>Mínimo</th>
+                    </tr>
+                </thead>
+                <tbody id="low-stock-products"></tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
+{% endblock %}

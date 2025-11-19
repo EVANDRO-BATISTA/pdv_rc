@@ -1,0 +1,88 @@
+{% extends "layout.html" %}
+
+{% block title %}Estoque - Sistema PDV{% endblock %}
+
+{% block main_content %}
+<div class="page-container">
+    <div class="page-header">
+        <h1>Controle de Estoque</h1>
+        <button onclick="openMovementModal()" class="btn btn-primary">Nova Movimentação</button>
+    </div>
+    
+    <div class="tabs">
+        <button class="tab-btn active" onclick="showTab('products')">Produtos</button>
+        <button class="tab-btn" onclick="showTab('movements')">Movimentações</button>
+    </div>
+    
+    <div id="products-tab" class="tab-content active">
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>Produto</th>
+                    <th>Categoria</th>
+                    <th>Estoque Atual</th>
+                    <th>Estoque Mínimo</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody id="stock-table"></tbody>
+        </table>
+    </div>
+    
+    <div id="movements-tab" class="tab-content">
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>Data</th>
+                    <th>Produto</th>
+                    <th>Tipo</th>
+                    <th>Quantidade</th>
+                    <th>Motivo</th>
+                </tr>
+            </thead>
+            <tbody id="movements-table"></tbody>
+        </table>
+    </div>
+</div>
+
+<div id="movement-modal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2>Nova Movimentação</h2>
+            <button onclick="closeMovementModal()" class="close-btn">&times;</button>
+        </div>
+        
+        <form id="movement-form">
+            <div class="form-group">
+                <label>Produto *</label>
+                <select id="movement-product" required></select>
+            </div>
+            
+            <div class="form-group">
+                <label>Tipo *</label>
+                <select id="movement-type" required>
+                    <option value="entry">Entrada</option>
+                    <option value="exit">Saída</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label>Quantidade *</label>
+                <input type="number" id="movement-quantity" min="1" required>
+            </div>
+            
+            <div class="form-group">
+                <label>Motivo</label>
+                <textarea id="movement-reason" rows="3"></textarea>
+            </div>
+            
+            <div class="modal-actions">
+                <button type="submit" class="btn btn-primary">Salvar</button>
+                <button type="button" onclick="closeMovementModal()" class="btn btn-secondary">Cancelar</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script src="{{ url_for('static', filename='js/estoque.js') }}"></script>
+{% endblock %}

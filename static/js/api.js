@@ -1,0 +1,47 @@
+const api = {
+    async get(url) {
+        const response = await fetch(url);
+        if (!response.ok) throw new Error('Request failed');
+        return await response.json();
+    },
+    
+    async post(url, data) {
+        const response = await fetch(url, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data)
+        });
+        if (!response.ok) throw new Error('Request failed');
+        return await response.json();
+    },
+    
+    async put(url, data) {
+        const response = await fetch(url, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data)
+        });
+        if (!response.ok) throw new Error('Request failed');
+        return await response.json();
+    },
+    
+    async delete(url) {
+        const response = await fetch(url, { method: 'DELETE' });
+        if (!response.ok) throw new Error('Request failed');
+    }
+};
+
+function formatCurrency(value) {
+    return new Intl.NumberFormat('pt-BR', {
+        style: 'currency',
+        currency: 'BRL'
+    }).format(value);
+}
+
+function formatDateTime(dateString) {
+    return new Date(dateString).toLocaleString('pt-BR');
+}
+
+function formatDate(dateString) {
+    return new Date(dateString).toLocaleDateString('pt-BR');
+}
